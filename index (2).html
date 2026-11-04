@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Formulir Data Tim Ijazah</title>
+<script>
+  /* ====== PENGATURAN: isi dengan URL Web App Apps Script ====== */
+  const API_URL = 'https://script.google.com/macros/s/GANTI_DENGAN_ID_DEPLOYMENT/exec';
+</script>
+<style>
+  :root{
+    --bg:#f4f5f7; --card:#fff; --ink:#1a1d23; --muted:#5f6673; --line:#e1e4e9;
+    --brand:#1f4e79; --brand-soft:#e8eff6; --warn:#a15c00; --warn-soft:#fff4e0;
+    --ok:#1e7a46; --ok-soft:#e6f4ec; --err:#b42318; --lock:#f7f8fa;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  .wrap{max-width:720px;margin:0 auto;padding:24px 16px 64px}
+  header{background:var(--card);border-top:6px solid var(--brand);border-radius:10px;padding:22px 22px 18px;margin-bottom:16px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  header h1{margin:0 0 4px;font-size:21px;line-height:1.3}
+  header p{margin:0;color:var(--muted);font-size:14px}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;font-size:13px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+  .card{background:var(--card);border-radius:10px;padding:6px 22px 18px;margin-bottom:16px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .card h2{font-size:15px;text-transform:uppercase;letter-spacing:.04em;color:var(--brand);margin:16px 0 4px}
+  .f{padding:14px 0;border-bottom:1px solid var(--line)}
+  .f:last-child{border-bottom:0}
+  .lbl{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .req{color:var(--err)}
+  .tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;text-transform:uppercase;letter-spacing:.03em}
+  .tag.lock{background:#eceef1;color:var(--muted)}
+  .tag.beda{background:var(--warn-soft);color:var(--warn)}
+  .tag.isi{background:var(--brand-soft);color:var(--brand)}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .locked{background:var(--lock);border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:#30343b;display:flex;gap:10px;align-items:flex-start;word-break:break-word}
+  .locked svg{flex:none;margin-top:3px;opacity:.5}
+  input[type=text],input[type=email],input[type=tel],textarea,select{width:100%;font:inherit;padding:10px 12px;border:1px solid #c9ced6;border-radius:8px;background:#fff;color:inherit}
+  textarea{min-height:80px;resize:vertical}
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--brand);outline-offset:0;border-color:var(--brand)}
+  .beda-box{border:1px solid #f0cf96;background:var(--warn-soft);border-radius:8px;padding:10px 12px}
+  .beda-box .q{font-size:13px;color:var(--warn);margin-bottom:8px}
+  .opt{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin-bottom:6px;cursor:pointer}
+  .opt:has(input:checked){border-color:var(--brand);box-shadow:0 0 0 1px var(--brand)}
+  .opt input{margin-top:4px;accent-color:var(--brand)}
+  .opt b{display:block;font-weight:600;word-break:break-word}
+  .opt small{color:var(--muted)}
+  .opt .other{margin-top:6px}
+  .err-msg{color:var(--err);font-size:13px;margin-top:6px;display:none}
+  .f.invalid .err-msg{display:block}
+  .f.invalid input,.f.invalid textarea,.f.invalid select,.f.invalid .beda-box,.f.invalid .pad{border-color:var(--err)}
+  .pad{border:1.5px dashed #b8bec8;border-radius:8px;background:#fff;position:relative;touch-action:none}
+  .pad canvas{display:block;width:100%;height:190px;cursor:crosshair}
+  .pad .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#a0a6b0;pointer-events:none;font-size:14px}
+  .pad-bar{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:13px;color:var(--muted)}
+  button{font:inherit;cursor:pointer}
+  .link-btn{background:none;border:0;color:var(--brand);font-weight:600;padding:4px 0}
+  .check{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+  .check input{margin-top:4px;width:18px;height:18px;accent-color:var(--brand)}
+  .submit{width:100%;background:var(--brand);color:#fff;border:0;border-radius:8px;padding:14px;font-weight:600;font-size:16px}
+  .submit:disabled{opacity:.6;cursor:wait}
+  .note{border-radius:8px;padding:12px 14px;font-size:14px;margin-bottom:16px}
+  .note.info{background:var(--brand-soft);color:#173c5e}
+  .note.warn{background:var(--warn-soft);color:#6e3f00}
+  .state{background:var(--card);border-radius:10px;padding:40px 24px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  .state h2{margin:12px 0 6px;font-size:20px}
+  .state p{color:var(--muted);margin:0}
+  .spin{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--brand);border-radius:50%;animation:s 1s linear infinite;margin:0 auto}
+  @keyframes s{to{transform:rotate(360deg)}}
+  .picker select{font-size:16px;padding:12px;border:1.5px solid var(--brand)}
+  .samar{font-size:11.5px;color:var(--muted);margin-left:auto;white-space:nowrap;padding-left:8px}
+  .hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="loading" class="state"><div class="spin"></div><p style="margin-top:14px">Memuat data Anda…</p></div>
+  <div id="fail" class="state hidden"><h2>Tidak dapat membuka formulir</h2><p id="failMsg"></p></div>
+  <div id="done" class="state hidden">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#1e7a46" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+    <h2>Terima kasih, data sudah terkirim</h2>
+    <p>Data Anda sudah kami terima. Jika ada yang perlu dikoreksi, buka kembali formulir ini, pilih nama Anda, lalu kirim ulang.</p>
+    <p style="margin-top:14px"><a class="link-btn" href="?" onclick="this.href=location.pathname+(location.search.indexOf('demo')>-1?'?demo':'')">Kembali ke awal</a></p>
+  </div>
+
+  <form id="form" class="hidden" novalidate>
+    <header>
+      <h1 id="judul"></h1>
+      <p id="subjudul"></p>
+      <div class="legend">
+        <span><i class="dot" style="background:#c4c9d1"></i>Terkunci: data sudah sama</span>
+        <span><i class="dot" style="background:#e9a23b"></i>Perlu konfirmasi: data berbeda</span>
+        <span><i class="dot" style="background:var(--brand)"></i>Perlu diisi</span>
+      </div>
+    </header>
+
+    <div class="card picker">
+      <h2>Pilih Nama Anda</h2>
+      <div class="f" style="border:0;padding-bottom:4px">
+        <select id="pilihNama" aria-label="Pilih nama"><option value="">— Pilih nama —</option></select>
+        <div class="hint">Nama tidak ada di daftar? Hubungi panitia.</div>
+      </div>
+    </div>
+
+    <div id="isiLoad" class="state hidden" style="padding:28px"><div class="spin"></div><p style="margin-top:12px">Memuat data…</p></div>
+
+    <div id="isi" class="hidden">
+    <div id="pernah" class="note info hidden"></div>
+    <div id="ringkas" class="note warn hidden"></div>
+    <div id="fields"></div>
+
+    <div class="card">
+      <h2>Pengesahan</h2>
+      <div class="f" id="f-ttd">
+        <div class="lbl">Tanda Tangan <span class="req">*</span> <span class="tag isi">Isi</span></div>
+        <div class="pad"><canvas id="pad"></canvas><div class="ph" id="ph">Tanda tangan di sini</div></div>
+        <div class="pad-bar"><span>Gunakan jari (HP) atau mouse</span><button type="button" class="link-btn" id="clear">Ulangi</button></div>
+        <div class="err-msg">Tanda tangan wajib diisi</div>
+      </div>
+      <div class="f" id="f-setuju">
+        <label class="check"><input type="checkbox" id="setuju">
+          <span>Saya menyatakan bahwa data di atas benar dan dapat dipertanggungjawabkan.</span></label>
+        <div class="err-msg">Centang pernyataan ini untuk mengirim</div>
+      </div>
+      <button class="submit" id="kirim" type="submit">Kirim Data</button>
+      <div id="srvErr" class="err-msg" style="text-align:center"></div>
+    </div>
+    </div>
+  </form>
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const params = new URLSearchParams(location.search);
+  let token = '';
+  const DEMO = params.has('demo');
+  let FIELDS = [], PTKP = [], urut = 0;
+
+  const LOCK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const show = id => ['loading','fail','done','form'].forEach(x => $('#'+x).classList.toggle('hidden', x !== id));
+  const fail = m => { $('#failMsg').textContent = m; show('fail'); };
+
+  const api = async t => {
+    if (DEMO) { await new Promise(r => setTimeout(r, 300)); return t ? demoData(t) : demoDaftar(); }
+    const r = await fetch(API_URL + (t ? '?t=' + encodeURIComponent(t) : ''));
+    return r.json();
+  };
+
+  // Tahap 1: tampilkan judul + daftar nama
+  async function load(){
+    try {
+      const d = await api('');
+      if (!d.ok) return fail(d.pesan);
+      document.title = d.judul;
+      $('#judul').textContent = d.judul;
+      $('#subjudul').textContent = d.subjudul || '';
+      const sel = $('#pilihNama');
+      d.peserta.forEach(p => { const o = document.createElement('option'); o.value = p.id;
+        o.textContent = p.nama + (p.instansi ? ' — ' + p.instansi : ''); sel.appendChild(o); });
+      sel.addEventListener('change', () => pilih(sel.value));
+      initPad();
+      show('form');
+      const awal = params.get('t');
+      if (awal && d.peserta.some(p => p.id === awal)) { sel.value = awal; pilih(awal); }
+    } catch (e) { fail('Tidak dapat terhubung ke server. Periksa koneksi internet lalu muat ulang halaman.'); }
+  }
+
+  // Tahap 2: setelah nama dipilih, muat isian peserta itu
+  async function pilih(id){
+    const ke = ++urut;
+    token = id;
+    $('#isi').classList.add('hidden');
+    if (!id) return $('#isiLoad').classList.add('hidden');
+    $('#isiLoad').classList.remove('hidden');
+    try {
+      const d = await api(id);
+      if (ke !== urut) return;                         // nama sudah diganti lagi
+      $('#isiLoad').classList.add('hidden');
+      if (!d.ok) { alertBox(d.pesan); return; }
+      render(d);
+    } catch (e) {
+      if (ke === urut) { $('#isiLoad').classList.add('hidden'); alertBox('Gagal memuat data. Periksa koneksi lalu pilih nama lagi.'); }
+    }
+  }
+  function alertBox(m){ const r = $('#ringkas'); r.textContent = m; r.classList.remove('hidden'); $('#fields').innerHTML = '';
+    $('#isi').classList.remove('hidden'); document.querySelectorAll('#isi > .card').forEach(c => c.classList.add('hidden')); }
+
+  function inputHtml(f){
+    const id = 'in-' + f.key;
+    if (f.tipe === 'textarea') return `<textarea id="${id}" name="${f.key}"></textarea>`;
+    if (f.tipe === 'ptkp') return `<select id="${id}" name="${f.key}"><option value="">— Pilih status PTKP —</option>${PTKP.map(p=>`<option>${esc(p)}</option>`).join('')}</select>`;
+    const t = f.tipe === 'email' ? 'email' : 'text';
+    const im = (f.tipe === 'angka' || f.tipe === 'npwp') ? ' inputmode="numeric"' : '';
+    const ph = f.contoh ? ` placeholder="${esc(f.contoh)}"` : '';
+    return `<input type="${t}" id="${id}" name="${f.key}"${im}${ph} autocomplete="off">`;
+  }
+
+  function render(d){
+    FIELDS = d.fields; PTKP = d.ptkp || [];
+    // reset tampilan untuk peserta baru
+    document.querySelectorAll('#isi > .card').forEach(c => c.classList.remove('hidden'));
+    $('#pernah').classList.add('hidden'); $('#ringkas').classList.add('hidden');
+    $('#setuju').checked = false; $('#srvErr').style.display = 'none';
+    document.querySelectorAll('#isi .f.invalid').forEach(x => x.classList.remove('invalid'));
+    if (d.sudahKirim) { const p = $('#pernah'); p.textContent = 'Data atas nama ini sudah dikirim pada ' + d.sudahKirim + '. Mengirim lagi akan menggantikan data sebelumnya.'; p.classList.remove('hidden'); }
+    const nBeda = FIELDS.filter(f => f.status === 'beda').length;
+    const nIsi = FIELDS.filter(f => f.status === 'kosong').length;
+    if (nBeda || nIsi) {
+      const r = $('#ringkas');
+      r.innerHTML = 'Sebagian besar data Anda sudah terisi. Mohon lengkapi: ' +
+        [nBeda ? `<b>${nBeda} data perlu dikonfirmasi</b> (data Anda berbeda di dua formulir sebelumnya)` : '',
+         nIsi ? `<b>${nIsi} isian baru</b>` : ''].filter(Boolean).join(' dan ') + ', lalu tanda tangan.';
+      r.classList.remove('hidden');
+    }
+    let html = '', bag = null;
+    FIELDS.forEach(f => {
+      if (f.bagian !== bag) { if (bag !== null) html += '</div>'; bag = f.bagian; html += `<div class="card"><h2>${esc(bag)}</h2>`; }
+      const req = f.wajib && f.status !== 'kunci' ? ' <span class="req">*</span>' : '';
+      const tag = f.status === 'kunci' ? '<span class="tag lock">Terkunci</span>'
+                : f.status === 'beda' ? '<span class="tag beda">Perlu konfirmasi</span>' : '<span class="tag isi">Isi</span>';
+      let body;
+      if (f.status === 'kunci') {
+        body = `<div class="locked">${LOCK}<span>${esc(f.nilai)}</span>${f.samar ? '<span class="samar">disamarkan</span>' : ''}</div>`;
+      } else if (f.status === 'beda') {
+        body = `<div class="beda-box"><div class="q">Data ${esc(f.label)} Anda berbeda di dua formulir sebelumnya. Pilih yang benar:</div>` +
+          f.opsi.map((o,i) => `<label class="opt"><input type="radio" name="${f.key}" value="${esc(o.nilai)}"><span><b>${esc(o.nilai)}</b><small>dari ${esc(o.sumber)}</small></span></label>`).join('') +
+          `<label class="opt"><input type="radio" name="${f.key}" value="__lain"><span style="flex:1"><b>Bukan keduanya, saya tulis yang benar</b>
+             <div class="other hidden">${inputHtml(f)}</div></span></label></div>`;
+      } else {
+        body = inputHtml(f);
+      }
+      html += `<div class="f" id="f-${f.key}"><div class="lbl">${esc(f.label)}${req} ${tag}</div>${body}` +
+        (f.petunjuk && f.status !== 'kunci' ? `<div class="hint">${esc(f.petunjuk)}</div>` : '') +
+        `<div class="err-msg"></div></div>`;
+    });
+    $('#fields').innerHTML = html + '</div>';
+
+    // tampilkan kotak "tulis sendiri" saat dipilih
+    FIELDS.filter(f => f.status === 'beda').forEach(f => {
+      document.querySelectorAll(`input[name="${f.key}"][type=radio]`).forEach(r => r.addEventListener('change', () => {
+        const box = $('#f-' + f.key + ' .other');
+        box.classList.toggle('hidden', r.value !== '__lain' || !r.checked);
+        if (r.value === '__lain' && r.checked) box.querySelector('input,textarea,select').focus();
+      }));
+    });
+    $('#isi').classList.remove('hidden');
+    $('#clear').click(); fitPad();
+  }
+
+  function nilai(f){
+    if (f.status === 'kunci') return f.nilai;
+    if (f.status === 'beda') {
+      const r = document.querySelector(`input[name="${f.key}"][type=radio]:checked`);
+      if (!r) return '';
+      return r.value === '__lain' ? ($('#in-' + f.key).value || '').trim() : r.value;
+    }
+    return ($('#in-' + f.key).value || '').trim();
+  }
+
+  function cekField(f, v){
+    if (f.status === 'kunci') return '';
+    if (f.status === 'beda' && !document.querySelector(`input[name="${f.key}"]:checked`)) return 'Pilih salah satu';
+    if (f.wajib && !v) return f.label + ' wajib diisi';
+    if (!v) return '';
+    const dg = v.replace(/\D/g, '');
+    if (f.tipe === 'npwp' && !(dg.length === 15 || dg.length === 16)) return 'NPWP harus 15 digit (NPWP lama) atau 16 digit (NIK)';
+    if (f.tipe === 'angka' && /[^\d\s.\-+]/.test(v)) return 'Hanya boleh berisi angka';
+    if (f.tipe === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'Format email tidak valid';
+    return '';
+  }
+
+  // ===== Tanda tangan =====
+  let pad, ctx, kosong = true, fitPad = () => {};
+  function initPad(){
+    document.addEventListener('input', e => { const f = e.target.closest('.f'); if (f) f.classList.remove('invalid'); });
+    document.addEventListener('change', e => { const f = e.target.closest('.f'); if (f) f.classList.remove('invalid'); });
+    pad = $('#pad'); ctx = pad.getContext('2d');
+    const fit = fitPad = () => {
+      if (!pad.clientWidth) return;
+      const img = kosong ? null : pad.toDataURL();
+      const r = window.devicePixelRatio || 1, w = pad.clientWidth, h = pad.clientHeight;
+      pad.width = w * r; pad.height = h * r; ctx.setTransform(r,0,0,r,0,0);
+      ctx.lineWidth = 2.2; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#0b1f3a';
+      if (img) { const i = new Image(); i.onload = () => ctx.drawImage(i, 0, 0, w, h); i.src = img; }
+    };
+    fit(); window.addEventListener('resize', fit);
+    let drawing = false, last = null;
+    const pos = e => { const b = pad.getBoundingClientRect(); return { x: e.clientX - b.left, y: e.clientY - b.top }; };
+    pad.addEventListener('pointerdown', e => { drawing = true; last = pos(e); pad.setPointerCapture(e.pointerId);
+      ctx.beginPath(); ctx.arc(last.x, last.y, 1.1, 0, Math.PI*2); ctx.fillStyle = '#0b1f3a'; ctx.fill(); mark(); });
+    pad.addEventListener('pointermove', e => { if (!drawing) return; const p = pos(e);
+      ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(p.x, p.y); ctx.stroke(); last = p; });
+    ['pointerup','pointercancel','pointerleave'].forEach(t => pad.addEventListener(t, () => drawing = false));
+    $('#clear').onclick = () => { ctx.clearRect(0, 0, pad.width, pad.height); kosong = true; $('#ph').classList.remove('hidden'); };
+    function mark(){ kosong = false; $('#ph').classList.add('hidden'); $('#f-ttd').classList.remove('invalid'); }
+  }
+  function ttdPng(){
+    // potong area kosong agar tanda tangan rapi di PDF
+    const w = pad.width, h = pad.height, d = ctx.getImageData(0, 0, w, h).data;
+    let x0 = w, y0 = h, x1 = 0, y1 = 0;
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (d[(y*w + x)*4 + 3] > 10) {
+      if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    const m = 12, c = document.createElement('canvas');
+    x0 = Math.max(0, x0 - m); y0 = Math.max(0, y0 - m); x1 = Math.min(w, x1 + m); y1 = Math.min(h, y1 + m);
+    c.width = x1 - x0; c.height = y1 - y0;
+    c.getContext('2d').drawImage(pad, x0, y0, c.width, c.height, 0, 0, c.width, c.height);
+    return c.toDataURL('image/png');
+  }
+
+  // ===== Kirim =====
+  $('#form').addEventListener('submit', async e => {
+    e.preventDefault();
+    $('#srvErr').style.display = 'none';
+    const jawaban = {}; let pertama = null;
+    FIELDS.forEach(f => {
+      const v = nilai(f), msg = cekField(f, v), el = $('#f-' + f.key);
+      jawaban[f.key] = v;
+      el.classList.toggle('invalid', !!msg); el.querySelector('.err-msg').textContent = msg;
+      if (msg && !pertama) pertama = el;
+    });
+    if (kosong) { $('#f-ttd').classList.add('invalid'); pertama = pertama || $('#f-ttd'); }
+    if (!$('#setuju').checked) { $('#f-setuju').classList.add('invalid'); pertama = pertama || $('#f-setuju'); }
+    if (pertama) return pertama.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const btn = $('#kirim'); btn.disabled = true; btn.textContent = 'Mengirim…';
+    try {
+      if (DEMO) { await new Promise(r => setTimeout(r, 600)); console.log({ jawaban }); show('done'); return; }
+      const r = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ t: token, jawaban, ttd: ttdPng() }) });
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.pesan);
+      show('done'); window.scrollTo(0, 0);
+    } catch (err) {
+      const s = $('#srvErr'); s.textContent = 'Gagal mengirim: ' + (err.message || 'periksa koneksi internet') + '. Coba lagi.'; s.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Kirim Data';
+    }
+  });
+
+  // ===== Data contoh (buka index.html?demo) — fiktif =====
+  function demoDaftar(){
+    return { ok:true, judul:'Formulir Data Tim Pengelola Ijazah SMK 2026', subjudul:'Direktorat SMK — Kementerian Pendidikan Dasar dan Menengah',
+      peserta:[{id:'a',nama:'Contoh Peserta, S.Pd',instansi:'Dinas Pendidikan Provinsi Contoh'},
+               {id:'b',nama:'Peserta Kedua',instansi:'Dinas Pendidikan Kabupaten Contoh'}] };
+  }
+  function demoData(t){
+    const P = ['TK/0 (Tidak Kawin Tanpa Tanggungan)','K/0 (Kawin Tanpa Tanggungan)','K/1 (Kawin dengan 1 Orang Tanggungan)','K/2 (Kawin dengan 2 Orang Tanggungan)'];
+    const k = (key,label,bagian,nilai,extra) => Object.assign({key,label,bagian,nilai,status:'kunci',tipe:'teks',wajib:true,petunjuk:''},extra||{});
+    const kos = (key,label,extra) => k(key,label,'Rekening Bank','',Object.assign({status:'kosong'},extra||{}));
+    if (t === 'b') return { ok:true, ptkp:P, sudahKirim:'3/11/2026 14:52', fields:[
+        k('nama','Nama Lengkap','Identitas Petugas','Peserta Kedua'),
+        k('nip','NIP','Identitas Petugas','',{status:'kosong',wajib:false,tipe:'angka',petunjuk:'Kosongkan bila bukan ASN'}),
+        k('jabatan','Jabatan','Identitas Petugas','Operator'),
+        k('golongan','Golongan','Identitas Petugas','',{status:'kosong',contoh:'Contoh: III-A',petunjuk:'Contoh: III-A, IV-B, atau PPPK VII. Isi "-" bila tidak memiliki golongan.'}),
+        k('hp','Nomor HP/WhatsApp','Identitas Petugas','081300000000'),
+        k('email','Alamat Email','Identitas Petugas','kedua@example.com'),
+        k('instansi','Instansi','Instansi','Dinas Pendidikan Kabupaten Contoh'),
+        k('tingkat','Tingkat Instansi','Instansi','Kabupaten/Kota'),
+        k('provinsi','Provinsi','Instansi','Contoh'),
+        k('alamat','Alamat Instansi','Instansi','',{status:'kosong',tipe:'textarea'}),
+        k('npwp','NPWP','Perpajakan','••.•••.•••.•-••4.000',{samar:true}),
+        k('ptkp','Status PTKP','Perpajakan','',{status:'kosong',tipe:'ptkp'}),
+        kos('bank','Nama Bank'), kos('rek','Nomor Rekening',{tipe:'angka'}), kos('atasnama','Rekening Atas Nama')]};
+    return { ok:true, ptkp:P, sudahKirim:null,
+      fields:[
+        k('nama','Nama Lengkap','Identitas Petugas','Contoh Peserta, S.Pd'),
+        k('nip','NIP','Identitas Petugas','198001012005011001'),
+        k('jabatan','Jabatan','Identitas Petugas','Pengolah Data'),
+        k('golongan','Golongan','Identitas Petugas','',{status:'kosong',contoh:'Contoh: III-A',petunjuk:'Contoh: III-A, IV-B, atau PPPK VII. Isi "-" bila tidak memiliki golongan.'}),
+        k('hp','Nomor HP/WhatsApp','Identitas Petugas','081200000000'),
+        k('email','Alamat Email','Identitas Petugas','contoh@example.com'),
+        k('instansi','Instansi','Instansi','Dinas Pendidikan Provinsi Contoh'),
+        k('tingkat','Tingkat Instansi','Instansi','Provinsi'),
+        k('provinsi','Provinsi','Instansi','Contoh'),
+        k('alamat','Alamat Instansi','Instansi','',{status:'kosong',tipe:'textarea',petunjuk:'Alamat lengkap kantor: jalan, kelurahan, kecamatan, kab/kota, kode pos'}),
+        k('npwp','NPWP','Perpajakan','',{status:'beda',tipe:'npwp',petunjuk:'15 digit (NPWP lama) atau 16 digit (NIK)',opsi:[{nilai:'12.345.678.9-012.000',sumber:'Data Rekening & Pajak (Nov 2026)'},{nilai:'12.345.679.9-012.000',sumber:'Data Petugas Terverifikasi (Jun 2026)'}]}),
+        k('ptkp','Status PTKP','Perpajakan','K/1 (Kawin dengan 1 Orang Tanggungan)'),
+        k('bank','Nama Bank','Rekening Bank','Bank Contoh'),
+        k('rek','Nomor Rekening','Rekening Bank','••••••4567',{samar:true}),
+        k('atasnama','Rekening Atas Nama','Rekening Bank','Contoh Peserta'),
+      ]};
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>
