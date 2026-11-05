@@ -194,7 +194,7 @@
     if (f.tipe === 'textarea') return `<textarea id="${id}" name="${f.key}"></textarea>`;
     if (f.tipe === 'ptkp') return `<select id="${id}" name="${f.key}"><option value="">— Pilih status PTKP —</option>${PTKP.map(p=>`<option>${esc(p)}</option>`).join('')}</select>`;
     const t = f.tipe === 'email' ? 'email' : 'text';
-    const im = (f.tipe === 'angka' || f.tipe === 'npwp') ? ' inputmode="numeric"' : '';
+    const im = (f.tipe === 'angka' || f.tipe === 'npwp' || f.tipe === 'nik') ? ' inputmode="numeric"' : '';
     const ph = f.contoh ? ` placeholder="${esc(f.contoh)}"` : '';
     return `<input type="${t}" id="${id}" name="${f.key}"${im}${ph} autocomplete="off">`;
   }
@@ -267,6 +267,7 @@
     if (f.wajib && !v) return f.label + ' wajib diisi';
     if (!v) return '';
     const dg = v.replace(/\D/g, '');
+    if (f.tipe === 'nik' && dg.length !== 16) return 'NIK harus 16 digit';
     if (f.tipe === 'npwp' && !(dg.length === 15 || dg.length === 16)) return 'NPWP harus 15 digit (NPWP lama) atau 16 digit (NIK)';
     if (f.tipe === 'angka' && /[^\d\s.\-+]/.test(v)) return 'Hanya boleh berisi angka';
     if (f.tipe === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'Format email tidak valid';
@@ -352,6 +353,7 @@
     const kos = (key,label,extra) => k(key,label,'Rekening Bank','',Object.assign({status:'kosong'},extra||{}));
     if (t === 'b') return { ok:true, ptkp:P, sudahKirim:'3/11/2026 14:52', fields:[
         k('nama','Nama Lengkap','Identitas Petugas','Peserta Kedua'),
+        k('nik','NIK','Identitas Petugas','',{status:'kosong',tipe:'nik',contoh:'16 digit sesuai KTP',petunjuk:'Nomor Induk Kependudukan 16 digit sesuai KTP'}),
         k('nip','NIP','Identitas Petugas','',{status:'kosong',wajib:false,tipe:'angka',petunjuk:'Kosongkan bila bukan ASN'}),
         k('jabatan','Jabatan','Identitas Petugas','Operator'),
         k('golongan','Golongan','Identitas Petugas','',{status:'kosong',contoh:'Contoh: III-A',petunjuk:'Contoh: III-A, IV-B, atau PPPK VII. Isi "-" bila tidak memiliki golongan.'}),
@@ -367,6 +369,7 @@
     return { ok:true, ptkp:P, sudahKirim:null,
       fields:[
         k('nama','Nama Lengkap','Identitas Petugas','Contoh Peserta, S.Pd'),
+        k('nik','NIK','Identitas Petugas','',{status:'kosong',tipe:'nik',contoh:'16 digit sesuai KTP',petunjuk:'Nomor Induk Kependudukan 16 digit sesuai KTP'}),
         k('nip','NIP','Identitas Petugas','198001012005011001'),
         k('jabatan','Jabatan','Identitas Petugas','Pengolah Data'),
         k('golongan','Golongan','Identitas Petugas','',{status:'kosong',contoh:'Contoh: III-A',petunjuk:'Contoh: III-A, IV-B, atau PPPK VII. Isi "-" bila tidak memiliki golongan.'}),
